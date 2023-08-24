@@ -1,0 +1,41 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type spatial;
+render_mode blend_mix, cull_disabled;
+
+uniform float dissolve_threshold: hint_range(0.0, 1.0, 0.01);
+uniform sampler2D dissolve_texture;
+uniform sampler2D albedo_texture;
+uniform sampler2D roughness_texture;
+uniform sampler2D normal_map;
+uniform sampler2D emission_map;
+uniform float emission_strength: hint_range(0.0, 1.0, 0.01);
+
+void fragment() {
+	vec3 color = texture(albedo_texture, UV).rgb;
+	float rough = texture(roughness_texture, UV).r;
+	vec3 normal = texture(normal_map, UV).rgb;
+	
+	// emission
+	vec3 emit = texture(emission_map, UV).rgb;
+	
+	// dissolve
+	float dissolve = texture(dissolve_texture, UV).r;
+	float alpha = step(dissolve, dissolve_threshold);
+	
+	ALPHA = alpha;
+	ALPHA_SCISSOR = 0.1;
+	ALBEDO = color;
+	ROUGHNESS = rough;
+	SPECULAR = 0.0;
+	NORMALMAP = normal;
+	EMISSION = emit * emission_strength;
+}"
+
+[resource]
+resource_local_to_scene = true
+render_priority = 1
+shader = SubResource( 1 )
+shader_param/dissolve_threshold = null
+shader_param/emission_strength = null
