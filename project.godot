@@ -19,7 +19,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Interact Tutorial/Button/Interactable.gd"
 }, {
-"base": "KinematicBody",
+"base": "Reference",
 "class": "Player",
 "language": "GDScript",
 "path": "res://Interact Tutorial/Player/player.gd"
@@ -39,7 +39,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Tutorial"
-run/main_scene="res://Ice Tutorial/Map/Overworld.tscn"
+run/main_scene="res://Ice Tutorial/Map/MainScene.tscn"
 config/icon="res://icon.png"
 
 [display]
